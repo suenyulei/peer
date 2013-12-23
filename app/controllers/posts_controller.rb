@@ -6,15 +6,15 @@ class PostsController < ApplicationController
   def index
     if params[:search]
       pattern = params[:search].split(/\s/).reject(&:empty?).map{|s| /#{Regexp.escape(s)}/i }
-      @posts = Post.or({ :title.all => pattern }, { :author_name.all => pattern }, { :body.all => pattern }, { :author_department.all => pattern }).desc(@order).page params[:page]
+      @posts = Post.or({ :title.all => pattern }, { :author_name.all => pattern }, { :body.all => pattern }, { :author_department.all => pattern }).desc(:is_top, :order).page params[:page]
     else
-      @posts = Post.desc(@is_top, @order).page params[:page]
+      @posts = Post.desc(:is_top, :order).page params[:page]
     end
   end
 
   # GET /my
   def my
-    @posts = current_user.posts.desc(@order).page params[:page]
+    @posts = current_user.posts.desc(:is_top, :order).page params[:page]
     render "index"
   end
 
@@ -27,7 +27,7 @@ class PostsController < ApplicationController
 
   # GET /favorite
   def favorite
-    @posts = current_user.favorite_posts.desc(@order).page params[:page]
+    @posts = current_user.favorite_posts.desc(:is_top, :order).page params[:page]
     render "index"
   end
 

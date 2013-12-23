@@ -38,6 +38,9 @@ class ApplicationController < ActionController::Base
   end
 
   def is_scores?
+    if @current_user.is_teacher
+      return true
+    end
     setting = Setting.where(key: 'scores').first
     return (setting && setting.value == 'yes') ? true : false
   end

@@ -39,6 +39,7 @@ class Post
       :remove_contents => true
     )
     self.author_name = self.author.name
+    self.author_department = self.author.department
   end
 
   def hide
