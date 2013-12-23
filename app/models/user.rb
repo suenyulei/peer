@@ -24,10 +24,10 @@ class User
   end
 
   def can_score?(post)
-    if self[:department] && self[:department].split('/')
-      is_college = (self[:department].split('/').first == post.author[:department].split('/').first)
-    else
+    if (self[:department] == post.author[:department]) || (self[:department] && post.author[:department] && self[:department].split('/').first == post.author[:department].split('/').first)
       is_college = true
+    else
+      is_college = false
     end
     !is_teacher? && self != post.author && is_college && !self.scores.where(post: post).exists? && self.scores.count < 3 && post.scores.count < 3
   end
