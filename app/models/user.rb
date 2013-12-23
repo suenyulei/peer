@@ -45,7 +45,7 @@ class User
   end
 
   def can_create_post?
-    !is_teacher? && self.posts.count < 1
+    self.posts.count < 1
   end
 
   def is_scores?
