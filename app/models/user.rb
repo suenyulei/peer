@@ -24,7 +24,7 @@ class User
   end
 
   def can_score?(post)
-    if self[:department]
+    if self[:department] && self[:department].split('/')
       is_college = (self[:department].split('/').first == post.author[:department].split('/').first)
     else
       is_college = true
